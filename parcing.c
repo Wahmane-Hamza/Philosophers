@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:32:36 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/12 17:08:12 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:30:54 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,20 @@ long	ft_atol(char *str)
 	return (result);
 }
 
-int get_data(t_data *data, int ac, char **av)
+int	get_data(t_data *data, int ac, char **av)
 {
-    data->i = 1;
-    data->nop = ft_atol(av[1]);
-    data->ttd = ft_atol(av[2]);
-    data->tte = ft_atol(av[3]);
-    data->tts = ft_atol(av[4]);
-    if (ac == 6)
-        data->nme = ft_atol(av[5]);
-    if (data->nme == -1 || data->nop == -1 || data->ttd == -1
-        || data->tte == -1 || data->tts == -1)
-    {
-        write(2, "Invalid Input!\n", 15);
-        return (0);
-    }
-    return (1);
+	data->i = 1;
+	data->nop = ft_atol(av[1]);
+	data->ttd = ft_atol(av[2]);
+	data->tte = ft_atol(av[3]);
+	data->tts = ft_atol(av[4]);
+	if (ac == 6)
+		data->nme = ft_atol(av[5]);
+	if (data->nme == -1 || data->nop == -1 || data->ttd == -1 || data->tte == -1
+		|| data->tts == -1)
+	{
+		write(2, "Invalid Input!\n", 15);
+		return (0);
+	}
+	return (1);
 }

@@ -6,18 +6,18 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:25 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/12 17:26:02 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:33:21 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-# include <unistd.h>
+# include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <pthread.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_philo
 {
@@ -33,22 +33,21 @@ typedef struct s_philo
 	long			nom;
 	long			nop;
 	struct s_philo	*next;
-}	t_philo;
+}					t_philo;
 
 typedef struct s_data
 {
-    t_philo			*first_filo;
+	t_philo			*first_filo;
 	pthread_t		waitress;
-    long    i;
-    long    nop;
-    long    ttd;
-    long    tte;
-    long    tts;
-    long    nme;
-}   t_data;
+	long			i;
+	long			nop;
+	long			ttd;
+	long			tte;
+	long			tts;
+	long			nme;
+}					t_data;
 
+int					get_data(t_data *data, int ac, char **av);
+void				creat_list(t_data *data, t_philo **philos);
 
-int get_data(t_data *data, int ac, char **av);
-void	creat_list(t_data *data, t_philo **philos);
-
-# endif
+#endif
