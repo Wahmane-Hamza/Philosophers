@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:25 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/12 17:33:21 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:42:26 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ typedef struct s_philo
 {
 	pthread_mutex_t	fork;
 	pthread_t		philo;
-	struct s_data	*all;
 	int				flag;
 	long			time;
 	long			pid;
 	long			ttd;
 	long			tte;
 	long			tts;
-	long			nom;
+	long			nme;
 	long			nop;
+	struct s_data	*all;
 	struct s_philo	*next;
 }					t_philo;
 

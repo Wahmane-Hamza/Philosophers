@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:58:06 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/12 17:30:46 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:42:38 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_philo	*new_node(t_data *data)
 	new_node->tte = data->tte;
 	new_node->ttd = data->ttd;
 	new_node->tts = data->tts;
-	new_node->nom = data->nme;
+	new_node->nme = data->nme;
 	new_node->nop = data->nop;
 	new_node->pid = data->i;
 	if (data->i % 2 == 0)
