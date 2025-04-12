@@ -3,14 +3,16 @@
 int main(int ac, char **av)
 {
     t_data data;
+    t_philo	*philos;
 
+	philos = NULL;
     if (ac == 5 || ac == 6)
     {
         if (!get_data(&data, ac, av))
             return (1);
         if (data.nop == 0 || data.nme == 0)
 			return (0);
-        
+        creat_list(&data, &philos);
     }
     else
     {

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:32:36 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/12 16:38:06 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:08:12 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ long	ft_atol(char *str)
 
 int get_data(t_data *data, int ac, char **av)
 {
+    data->i = 1;
     data->nop = ft_atol(av[1]);
     data->ttd = ft_atol(av[2]);
     data->tte = ft_atol(av[3]);

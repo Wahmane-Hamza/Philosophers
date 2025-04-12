@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = philosophers.c parcing.c
+SRC = philosophers.c parcing.c commands_help.c
 
 OBJ = ${SRC:.c=.o}
 
