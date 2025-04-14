@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:58:06 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/12 17:42:38 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:47:12 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,18 @@ void	creat_list(t_data *data, t_philo **philos)
 		lst_add_back(philos, new_node(data));
 		data->i++;
 	}
+}
+
+void	join_threads(t_data *data, t_philo *philos)
+{
+	int	i;
+
+	i = 1;
+	while (i <= data->nop)
+	{
+		pthread_join(philos->philo, NULL);
+		philos = philos->next;
+		i++;
+	}
+	pthread_join(data->philos, NULL);
 }
