@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:33:58 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/14 16:51:43 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:27:14 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	main(int ac, char **av)
 			return (0);
 		creat_list(&data, &philos);
 		start_simulation(&data, philos);
+		join_threads(&data, philos);
 		ft_lstclear(&philos, &data);
 		pthread_mutex_destroy(&data.print);
 		pthread_mutex_destroy(&data.edit);
