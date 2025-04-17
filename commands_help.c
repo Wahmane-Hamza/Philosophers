@@ -5,80 +5,95 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 16:58:06 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 14:55:17 by hwahmane         ###   ########.fr       */
+/*   Created: 2025/04/17 17:06:52 by hwahmane          #+#    #+#             */
+/*   Updated: 2025/04/17 18:36:27 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_philo	*lst_last(t_philo *head)
+long	get_time(void)
 {
-	if (!head)
-		return (NULL);
-	while (head && head->next)
-		head = head->next;
-	return (head);
+	struct timeval	tv;
+	long			time;
+
+	gettimeofday(&tv, NULL);
+	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	return (time);
 }
 
-t_philo	*new_node(t_data *data)
+void philo_arr(t_data *data)
 {
-	t_philo	*new_node;
+    int i;
 
-	new_node = malloc(sizeof(t_philo));
-	if (data->i == 1)
-		data->first_filo = new_node;
-	pthread_mutex_init(&new_node->fork, NULL);
-	new_node->all = data;
-	new_node->tte = data->tte;
-	new_node->ttd = data->ttd;
-	new_node->tts = data->tts;
-	new_node->nme = data->nme;
-	new_node->nop = data->nop;
-	new_node->pid = data->i;
-	if (data->i % 2 == 0)
-		new_node->flag = 1;
-	else
-		new_node->flag = 0;
-	if (data->i == data->nop)
-		new_node->next = data->first_filo;
-	else
-		new_node->next = NULL;
-	return (new_node);
+    data->philos = malloc(data->nop * sizeof(t_philo));
+    i = 0;
+    while (i < data->nop)
+    {
+        data->philos[i].id = i + 1;
+        data->philos[i].lmt = get_time();
+        data->philos[i].counter = 0;
+        data->philos[i].all = data;
+        if (i % 2 == 0)
+        {
+            data->philos[i].rfork = &data->fork[i];
+            data->philos[i].lfork = &data->fork[(i + 1) % data->nop];
+        }
+        else
+        {
+            data->philos[i].rfork = &data->fork[(i + 1) % data->nop];
+            data->philos[i].lfork = &data->fork[i];
+        }
+        i++;
+    }
 }
 
-void	lst_add_back(t_philo **head, t_philo *new_node)
+void fork_arr(t_data *data)
 {
-	t_philo	*last_node;
+    int i;
 
-	if (!head)
-		return ;
-	last_node = lst_last(*head);
-	if (*head)
-		last_node->next = new_node;
-	else
-		*head = new_node;
+    data->fork = malloc(data->nop * sizeof(pthread_mutex_t));
+    i = 0;
+    while (i < data->nop)
+    {
+        pthread_mutex_init(&data->fork[i], NULL);
+        i++;
+    }
 }
 
-void	creat_list(t_data *data, t_philo **philos)
+void *rout(void *arg)
 {
-	while (data->i <= data->nop)
-	{
-		lst_add_back(philos, new_node(data));
-		data->i++;
-	}
+    
+    
+
+
+    return (NULL);
 }
 
-void	join_threads(t_data *data, t_philo *philos)
+int creat_threads(t_data *data)
 {
-	int	i;
+    int i;
 
-	i = 1;
-	while (i <= data->nop)
-	{
-		pthread_join(philos->philo, NULL);
-		philos = philos->next;
-		i++;
-	}
-	pthread_join(data->philos, NULL);
+    i = 0;
+    while (i < data->nop)
+    {
+        
+        if (pthread_create(&data->philos[i].philo, NULL, &rout, &data->philos[i]) != 0)
+        {
+            ft_lstclear(data);
+            return (0);
+        }
+        i++;
+    }
+    i = 0;
+    while (i < data->nop)
+    {
+        if (pthread_join(data->philos[i].philo, NULL) != 0)
+        {
+            ft_lstclear(data);
+            return (0);
+        }
+    }
+    return (1);
 }
+
