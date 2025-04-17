@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:25 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 18:25:03 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/17 19:04:10 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define THINKING 5
-# define TAKE_FORK 6
-# define EATING 7
-# define SLEEPING 8
-# define DEAD 9
+
+typedef enum s_status
+{
+	thinking,
+	take_fork,
+	eating,
+	sleeping,
+	dead,
+}	t_status;
 
 typedef enum s_bool
 {
@@ -70,9 +74,13 @@ void *rout(void *arg);
 
 // Command_help2
 void	ft_lstclear(t_data *data);
+void    ft_take_fork(t_philo *philo);
+void    ft_eat(t_philo *philo);
+void    ft_sleep(t_philo *philo);
+void    ft_think(t_philo *philo);
 
 // Command_help3
-
+void	print_events(t_philo *philo, int flag);
 
 
 

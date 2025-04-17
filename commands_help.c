@@ -6,16 +6,16 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:06:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 18:36:27 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/17 19:05:42 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-long	get_time(void)
+time_t	get_time(void)
 {
 	struct timeval	tv;
-	long			time;
+	time_t			time;
 
 	gettimeofday(&tv, NULL);
 	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
@@ -63,9 +63,16 @@ void fork_arr(t_data *data)
 
 void *rout(void *arg)
 {
-    
-    
+    t_philo *philo;
 
+    philo = (t_philo *)arg;
+    while (1)
+    {
+        ft_take_fork(philo);
+        ft_eat(philo);    
+        ft_sleep(philo);    
+        ft_think(philo);
+    }
 
     return (NULL);
 }
