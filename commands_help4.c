@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:05:07 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 16:00:41 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:58:31 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,19 @@ t_bool check_meal(t_data *data)
     while (i < data->nop)
     {
         if (data->philos[i].counter != data->nme)
-            stop = 0;
-        if (stop == 1 && i + 1 == data->nop)
         {
-            pthread_mutex_lock(&data->stop);
-            data->stop_philo = true;
-            pthread_mutex_unlock(&data->meal);
-            pthread_mutex_unlock(&data->stop);
-            return (false);
+            stop = 0;            
+            break;
         }
         i++;
+    }
+    if (stop == 1)
+    {
+        pthread_mutex_lock(&data->stop);
+        data->stop_philo = true;
+        pthread_mutex_unlock(&data->meal);
+        pthread_mutex_unlock(&data->stop);
+        return (false);
     }
     pthread_mutex_unlock(&data->meal);
     return (true);
@@ -51,7 +54,10 @@ t_bool check_death(t_data *data)
             pthread_mutex_lock(&data->stop);
             data->stop_philo = true;
             pthread_mutex_unlock(&data->meal);
-            print_events(&data->philos[i], dead);
+        	pthread_mutex_lock(&data->print);
+            printf("%ld %d is dead\n",
+			    get_time() - data->start, data->philos[i].id);
+            pthread_mutex_unlock(&data->print);
             pthread_mutex_unlock(&data->stop);
             return (false);
         }
@@ -77,13 +83,13 @@ void *ft_monitor(void *arg)
             break;
         }
         pthread_mutex_unlock(&data->stop);
-        if (check_death(data) == false)
-            break;
         if (data->nme != -10)
         {
-            if (check_meal(data) == true)
+            if (check_meal(data) == false)
                 break;
         }
+        if (check_death(data) == false)
+            break;
     }
     return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:25 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 15:57:26 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:28:38 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef enum s_status
 	take_fork,
 	eating,
 	sleeping,
-	dead,
 }	t_status;
 
 typedef enum s_bool

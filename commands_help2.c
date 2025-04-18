@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:07:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 15:46:39 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:56:03 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ void	ft_lstclear(t_data *data)
 	pthread_mutex_destroy(&data->print);
 	pthread_mutex_destroy(&data->stop);
 	pthread_mutex_destroy(&data->meal);
+    int i;
+    i = 0;
+    while (i < data->nop)
+    {
+        pthread_mutex_destroy(&data->fork[i]);
+        i++;
+    }
 	free(data->philos);
 	free(data->fork);
 }
@@ -76,6 +83,8 @@ t_bool ft_eat(t_philo *philo)
     ft_usleep(philo->all, philo->all->tte);
     pthread_mutex_unlock(philo->lfork);
     pthread_mutex_unlock(philo->rfork);
+    if (philo->all->nme != -10 && philo->counter == philo->all->nme)
+        return (false);
     return (true);
 }
 

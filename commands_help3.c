@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:07:58 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 15:55:04 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:28:08 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ void	print_events(t_philo *philo, int flag)
 			get_time() - philo->all->start, philo->id);
 	else if (flag == sleeping)
 		printf("%ld %d is sleeping\n",
-			get_time() - philo->all->start, philo->id);
-    else if (flag == dead)
-		printf("%ld %d is dead\n",
 			get_time() - philo->all->start, philo->id);
 	pthread_mutex_unlock(&philo->all->print);
 }
