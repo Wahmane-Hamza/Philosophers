@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:25 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 16:28:38 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:07:11 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,27 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-
 typedef enum s_status
 {
 	thinking,
 	take_fork,
 	eating,
 	sleeping,
-}	t_status;
+}					t_status;
 
 typedef enum s_bool
 {
 	false,
 	true,
-}	t_bool;
+}					t_bool;
 
 typedef struct s_philo
 {
 	pthread_t		philo;
 	int				id;
 	int				counter;
-	pthread_mutex_t *lfork;
-	pthread_mutex_t *rfork;
+	pthread_mutex_t	*lfork;
+	pthread_mutex_t	*rfork;
 	time_t			lmt;
 	struct s_data	*all;
 }					t_philo;
@@ -66,37 +65,29 @@ typedef struct s_data
 int					get_data(t_data *data, int ac, char **av);
 
 // Command_help
-int creat_threads(t_data *data);
-void fork_arr(t_data *data);
-void philo_arr(t_data *data);
-void *rout(void *arg);
-t_bool ft_join_threads(t_data *data);
+int					creat_threads(t_data *data);
+void				fork_arr(t_data *data);
+void				philo_arr(t_data *data);
+void				*rout(void *arg);
+t_bool				ft_join_threads(t_data *data);
 
 // Command_help2
-t_bool someone_died(t_data *data);
-void	ft_lstclear(t_data *data);
-t_bool    ft_take_fork(t_philo *philo);
-t_bool    ft_eat(t_philo *philo);
-t_bool    ft_sleep(t_philo *philo);
-t_bool    ft_think(t_philo *philo);
+t_bool				someone_died(t_data *data);
+void				ft_lstclear(t_data *data);
+t_bool				ft_take_fork(t_philo *philo);
+t_bool				ft_eat(t_philo *philo);
+t_bool				ft_sleep(t_philo *philo);
+t_bool				ft_think(t_philo *philo);
 
 // Command_help3
-void	print_events(t_philo *philo, int flag);
-void ft_usleep(t_data *data, time_t time);
-void ft_wait(time_t time);
-long	get_time(void);
+void				print_events(t_philo *philo, int flag);
+void				ft_usleep(t_data *data, time_t time);
+void				ft_wait(time_t time);
+long				get_time(void);
+t_bool				someone_died(t_data *data);
 
 // Command_help4
-void *ft_monitor(void *arg);
-
-
-
-
-
-
-
-
-
+void				*ft_monitor(void *arg);
 
 // void				creat_list(t_data *data, t_philo **philos);
 // void	init_time(t_philo *philo);
