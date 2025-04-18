@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:25 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 19:04:10 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 11:40:40 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
+	pthread_t		death_note;
 	t_philo			*philos;
 	pthread_mutex_t	*fork;
 	time_t			start;
@@ -57,9 +58,9 @@ typedef struct s_data
 	time_t			tts;
 	int				nme;
 	t_bool			rip;
+	pthread_mutex_t	meal;
 	pthread_mutex_t	print;
-	// pthread_mutex_t	meal;
-	// pthread_mutex_t	stop;
+	pthread_mutex_t	stop;
 }					t_data;
 
 // Parsing
@@ -67,22 +68,26 @@ int					get_data(t_data *data, int ac, char **av);
 
 // Command_help
 int creat_threads(t_data *data);
-long	get_time(void);
 void fork_arr(t_data *data);
 void philo_arr(t_data *data);
 void *rout(void *arg);
+t_bool ft_join_threads(t_data *data);
 
 // Command_help2
 void	ft_lstclear(t_data *data);
-void    ft_take_fork(t_philo *philo);
-void    ft_eat(t_philo *philo);
-void    ft_sleep(t_philo *philo);
-void    ft_think(t_philo *philo);
+t_bool    ft_take_fork(t_philo *philo);
+t_bool    ft_eat(t_philo *philo);
+t_bool    ft_sleep(t_philo *philo);
+t_bool    ft_think(t_philo *philo);
 
 // Command_help3
 void	print_events(t_philo *philo, int flag);
+void ft_usleep(time_t time);
+void ft_wait(time_t time);
+long	get_time(void);
 
-
+// Command_help4
+void *ft_monitor(void *arg);
 
 
 

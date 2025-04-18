@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:07:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 19:04:27 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 11:15:33 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,51 @@
 
 void	ft_lstclear(t_data *data)
 {
-	int		i;
-
-	i = 0;
 	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->stop);
+	pthread_mutex_destroy(&data->meal);
 	free(data->philos);
 	free(data->fork);
 }
 
-void    ft_take_fork(t_philo *philo)
+t_bool    ft_take_fork(t_philo *philo)
 {
-    pthread_mutex_lock(philo->rfork);
+    if ( pthread_mutex_lock(philo->rfork) != 0)
+        return (false);
     print_events(philo, take_fork);
-    pthread_mutex_lock(philo->lfork);
+    if (pthread_mutex_lock(philo->lfork) != 0 || philo->all->nop < 2)
+    {
+        pthread_mutex_unlock(philo->rfork);
+        return (false);
+    }
     print_events(philo, take_fork);
+    return (true);
 }
 
-void    ft_eat(t_philo *philo)
+t_bool    ft_eat(t_philo *philo)
 {
-    // we need to protect this with mutex
     print_events(philo, eating);
+    if ( pthread_mutex_lock(&philo->all->meal) != 0)
+        return (false); 
     philo->counter++;
     philo->lmt = get_time();
-    usleep(philo->all->tte * 1000);
+    pthread_mutex_unlock(&philo->all->meal);
+    ft_usleep(philo->all->tte);
     pthread_mutex_unlock(philo->rfork);
     pthread_mutex_unlock(philo->lfork);
+    return (true);
 }
 
-void    ft_sleep(t_philo *philo)
+t_bool    ft_sleep(t_philo *philo)
 {
     print_events(philo, sleeping);
-    usleep(philo->all->tts * 1000);
+    ft_usleep(philo->all->tts);
+    return (true);
 }
 
-void    ft_think(t_philo *philo)
+t_bool    ft_think(t_philo *philo)
 {
     print_events(philo, thinking);
-    usleep(100 * 1000);
+    ft_usleep(100);
+    return (true);
 }

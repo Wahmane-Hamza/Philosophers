@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:33:58 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 18:25:58 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 12:02:22 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,7 @@ int	main(int ac, char **av)
 		philo_arr(&data);
 		if (creat_threads(&data) == 0)
 			return (1);
-		// start_simulation(&data, philos);
-		// join_threads(&data, philos);
-		// ft_lstclear(&philos, &data);
-		// pthread_mutex_destroy(&data.print);
-		// pthread_mutex_destroy(&data.edit);
+		ft_lstclear(&data);
 	}
 	else
 	{

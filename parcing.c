@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:32:36 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 18:01:57 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 11:10:54 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ long	ft_atol(char *str)
 
 int	get_data(t_data *data, int ac, char **av)
 {
-	data->rip = 0;
+	data->rip = false;
 	data->nop = ft_atol(av[1]);
 	data->ttd = ft_atol(av[2]);
 	data->tte = ft_atol(av[3]);
@@ -79,6 +79,8 @@ int	get_data(t_data *data, int ac, char **av)
 		write(2, "Invalid Input!\n", 15);
 		return (0);
 	}
+	pthread_mutex_init(&data->meal, NULL);
 	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->stop, NULL);
 	return (1);
 }

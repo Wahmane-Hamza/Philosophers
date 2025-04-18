@@ -6,21 +6,11 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:06:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 19:05:42 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 11:42:56 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-time_t	get_time(void)
-{
-	struct timeval	tv;
-	time_t			time;
-
-	gettimeofday(&tv, NULL);
-	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	return (time);
-}
 
 void philo_arr(t_data *data)
 {
@@ -66,15 +56,44 @@ void *rout(void *arg)
     t_philo *philo;
 
     philo = (t_philo *)arg;
+    ft_wait(philo->all->start);
     while (1)
     {
-        ft_take_fork(philo);
-        ft_eat(philo);    
-        ft_sleep(philo);    
+        pthread_mutex_lock(&philo->all->stop);
+        if (philo->all->rip == true)
+        {
+            pthread_mutex_unlock(&philo->all->stop);
+            break;
+        }
+        pthread_mutex_unlock(&philo->all->stop);
+        if (!ft_take_fork(philo))
+            break;
+        if (!ft_eat(philo))
+            break; 
+        ft_sleep(philo);
         ft_think(philo);
     }
-
     return (NULL);
+}
+t_bool ft_join_threads(t_data *data)
+{
+    int i;
+
+    i = 0;
+    while (i < data->nop)
+    {
+        if (pthread_join(data->philos[i].philo, NULL) != 0)
+        {
+            ft_lstclear(data);
+            return (false);
+        }
+    }
+    if (pthread_join(data->death_note, NULL) != 0)
+    {
+        ft_lstclear(data);
+        return (false);
+    }
+    return (true);
 }
 
 int creat_threads(t_data *data)
@@ -82,9 +101,9 @@ int creat_threads(t_data *data)
     int i;
 
     i = 0;
+    data->start = get_time() + (data->nop * 20);
     while (i < data->nop)
     {
-        
         if (pthread_create(&data->philos[i].philo, NULL, &rout, &data->philos[i]) != 0)
         {
             ft_lstclear(data);
@@ -92,15 +111,13 @@ int creat_threads(t_data *data)
         }
         i++;
     }
-    i = 0;
-    while (i < data->nop)
+    if (pthread_create(&data->death_note, NULL, &ft_monitor, &data) != 0)
     {
-        if (pthread_join(data->philos[i].philo, NULL) != 0)
-        {
-            ft_lstclear(data);
-            return (0);
-        }
+        ft_lstclear(data);
+        return (0);
     }
+    if (!ft_join_threads(data))
+        return (0);
     return (1);
 }
 
