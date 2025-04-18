@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:06:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 11:42:56 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:44:22 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,10 @@ t_bool ft_join_threads(t_data *data)
     i = 0;
     while (i < data->nop)
     {
-        if (pthread_join(data->philos[i].philo, NULL) != 0)
-        {
-            ft_lstclear(data);
-            return (false);
-        }
+        pthread_join(data->philos[i].philo, NULL);
+        i++;
     }
-    if (pthread_join(data->death_note, NULL) != 0)
-    {
-        ft_lstclear(data);
-        return (false);
-    }
+    pthread_join(data->death_note, NULL);
     return (true);
 }
 
@@ -106,14 +99,14 @@ int creat_threads(t_data *data)
     {
         if (pthread_create(&data->philos[i].philo, NULL, &rout, &data->philos[i]) != 0)
         {
-            ft_lstclear(data);
+            ft_join_threads(data);
             return (0);
         }
         i++;
     }
-    if (pthread_create(&data->death_note, NULL, &ft_monitor, &data) != 0)
+    if (pthread_create(&data->death_note, NULL, &ft_monitor, data) != 0)
     {
-        ft_lstclear(data);
+        ft_join_threads(data);
         return (0);
     }
     if (!ft_join_threads(data))

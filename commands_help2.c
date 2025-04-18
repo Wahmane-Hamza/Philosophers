@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:07:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 11:15:33 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:46:22 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,13 @@ t_bool    ft_take_fork(t_philo *philo)
 t_bool    ft_eat(t_philo *philo)
 {
     print_events(philo, eating);
-    if ( pthread_mutex_lock(&philo->all->meal) != 0)
-        return (false); 
+    pthread_mutex_lock(&philo->all->meal);
     philo->counter++;
     philo->lmt = get_time();
     pthread_mutex_unlock(&philo->all->meal);
     ft_usleep(philo->all->tte);
-    pthread_mutex_unlock(philo->rfork);
     pthread_mutex_unlock(philo->lfork);
+    pthread_mutex_unlock(philo->rfork); 
     return (true);
 }
 
@@ -59,6 +58,6 @@ t_bool    ft_sleep(t_philo *philo)
 t_bool    ft_think(t_philo *philo)
 {
     print_events(philo, thinking);
-    ft_usleep(100);
+    ft_usleep(50);
     return (true);
 }
