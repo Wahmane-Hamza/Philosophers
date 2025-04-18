@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_help2.c                                   :+:      :+:    :+:   */
+/*   commands_help2_old.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:44:34 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 16:52:56 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 14:07:56 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 // 	while (get_time() - time < t)
 // 	{
 // 		pthread_mutex_lock(&philo->all->edit);
-// 		if (philo->all->rip == 1)
+// 		if (philo->all->stop == 1)
 // 		{
 // 			pthread_mutex_unlock(&philo->all->edit);
 // 			break ;
@@ -50,7 +50,7 @@
 // int	check_death(t_philo *philo)
 // {
 // 	pthread_mutex_lock(&philo->all->edit);
-// 	if (philo->all->rip == 1)
+// 	if (philo->all->stop == 1)
 // 	{
 // 		pthread_mutex_unlock(&philo->all->edit);
 // 		return (0);

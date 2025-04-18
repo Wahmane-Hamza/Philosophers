@@ -6,11 +6,22 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:07:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 13:46:22 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:46:39 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+t_bool someone_died(t_data *data)
+{
+    t_bool died;
+
+    pthread_mutex_lock(&data->stop);
+    died = data->stop_philo;
+    pthread_mutex_unlock(&data->stop);
+    return died;
+}
+
 
 void	ft_lstclear(t_data *data)
 {
@@ -21,13 +32,27 @@ void	ft_lstclear(t_data *data)
 	free(data->fork);
 }
 
-t_bool    ft_take_fork(t_philo *philo)
+t_bool ft_take_fork(t_philo *philo)
 {
-    if ( pthread_mutex_lock(philo->rfork) != 0)
+    if (someone_died(philo->all))
         return (false);
-    print_events(philo, take_fork);
-    if (pthread_mutex_lock(philo->lfork) != 0 || philo->all->nop < 2)
+    if (pthread_mutex_lock(philo->rfork) != 0)
+        return (false);
+    if (someone_died(philo->all))
     {
+        pthread_mutex_unlock(philo->rfork);
+        return (false);
+    }
+    print_events(philo, take_fork);
+    
+    if (philo->all->nop < 2 || pthread_mutex_lock(philo->lfork) != 0)
+    {
+        pthread_mutex_unlock(philo->rfork);
+        return (false);
+    }
+    if (someone_died(philo->all))
+    {
+        pthread_mutex_unlock(philo->lfork);
         pthread_mutex_unlock(philo->rfork);
         return (false);
     }
@@ -35,29 +60,48 @@ t_bool    ft_take_fork(t_philo *philo)
     return (true);
 }
 
-t_bool    ft_eat(t_philo *philo)
+t_bool ft_eat(t_philo *philo)
 {
+    if (someone_died(philo->all))
+    {
+        pthread_mutex_unlock(philo->lfork);
+        pthread_mutex_unlock(philo->rfork);
+        return (false);
+    }
     print_events(philo, eating);
     pthread_mutex_lock(&philo->all->meal);
     philo->counter++;
     philo->lmt = get_time();
     pthread_mutex_unlock(&philo->all->meal);
-    ft_usleep(philo->all->tte);
+    ft_usleep(philo->all, philo->all->tte);
     pthread_mutex_unlock(philo->lfork);
-    pthread_mutex_unlock(philo->rfork); 
+    pthread_mutex_unlock(philo->rfork);
     return (true);
 }
 
-t_bool    ft_sleep(t_philo *philo)
+t_bool ft_sleep(t_philo *philo)
 {
+    if (someone_died(philo->all))
+        return (false);
     print_events(philo, sleeping);
-    ft_usleep(philo->all->tts);
+    ft_usleep(philo->all, philo->all->tts);
     return (true);
 }
 
-t_bool    ft_think(t_philo *philo)
+t_bool ft_think(t_philo *philo)
 {
+    time_t ttt;
+
+    if (someone_died(philo->all))
+        return (false);
+    pthread_mutex_lock(&philo->all->meal);
+    ttt = (philo->all->ttd -  (get_time() - philo->lmt)) / 2;
+    pthread_mutex_unlock(&philo->all->meal);
+    if (ttt <= 0)
+        ttt = 0;
+    else if (ttt > 200)
+        ttt = 200;
     print_events(philo, thinking);
-    ft_usleep(50);
+    ft_usleep(philo->all, ttt);
     return (true);
 }

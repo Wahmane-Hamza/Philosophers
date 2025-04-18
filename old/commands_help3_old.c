@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_help3.c                                   :+:      :+:    :+:   */
+/*   commands_help3_old.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:56:05 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/17 16:52:50 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 14:07:56 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 // void	print_events(t_philo *philo, int flag)
 // {
 // 	pthread_mutex_lock(&philo->all->edit);
-// 	if (philo->all->rip == 1)
+// 	if (philo->all->stop == 1)
 // 	{
 // 		pthread_mutex_unlock(&philo->all->edit);
 // 		return ;

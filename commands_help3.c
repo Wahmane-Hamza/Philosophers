@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:07:58 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 11:18:30 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:55:04 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	print_events(t_philo *philo, int flag)
 {
+	if (someone_died(philo->all))
+        return ;
 	pthread_mutex_lock(&philo->all->print);
 	if (flag == thinking)
 		printf("%ld %d is thinking\n",
@@ -33,14 +35,18 @@ void	print_events(t_philo *philo, int flag)
 	pthread_mutex_unlock(&philo->all->print);
 }
 
-void ft_usleep(time_t time)
+void ft_usleep(t_data *data, time_t time)
 {
 	time_t stop_time;
 
 	stop_time = get_time() + time;
 	while (get_time() < stop_time)	
 	{
-		usleep(100);
+		if (someone_died(data))
+			break ;
+		usleep(500);
+		if (someone_died(data))
+			break ;
 	}
 }
 

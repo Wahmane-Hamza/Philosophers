@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:06:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 13:44:22 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:58:06 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void philo_arr(t_data *data)
     while (i < data->nop)
     {
         data->philos[i].id = i + 1;
-        data->philos[i].lmt = get_time();
         data->philos[i].counter = 0;
         data->philos[i].all = data;
         if (i % 2 == 0)
@@ -48,7 +47,7 @@ void fork_arr(t_data *data)
     {
         pthread_mutex_init(&data->fork[i], NULL);
         i++;
-    }
+    }   
 }
 
 void *rout(void *arg)
@@ -57,10 +56,12 @@ void *rout(void *arg)
 
     philo = (t_philo *)arg;
     ft_wait(philo->all->start);
+    if (philo->id % 2 == 0)
+        ft_usleep(philo->all, 1);
     while (1)
     {
         pthread_mutex_lock(&philo->all->stop);
-        if (philo->all->rip == true)
+        if (philo->all->stop_philo == true)
         {
             pthread_mutex_unlock(&philo->all->stop);
             break;
@@ -75,6 +76,7 @@ void *rout(void *arg)
     }
     return (NULL);
 }
+
 t_bool ft_join_threads(t_data *data)
 {
     int i;
@@ -97,6 +99,7 @@ int creat_threads(t_data *data)
     data->start = get_time() + (data->nop * 20);
     while (i < data->nop)
     {
+        data->philos[i].lmt = data->start;
         if (pthread_create(&data->philos[i].philo, NULL, &rout, &data->philos[i]) != 0)
         {
             ft_join_threads(data);

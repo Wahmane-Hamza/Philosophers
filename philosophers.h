@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:25 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 11:40:40 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/18 15:57:26 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_data
 	time_t			tte;
 	time_t			tts;
 	int				nme;
-	t_bool			rip;
+	t_bool			stop_philo;
 	pthread_mutex_t	meal;
 	pthread_mutex_t	print;
 	pthread_mutex_t	stop;
@@ -74,6 +74,7 @@ void *rout(void *arg);
 t_bool ft_join_threads(t_data *data);
 
 // Command_help2
+t_bool someone_died(t_data *data);
 void	ft_lstclear(t_data *data);
 t_bool    ft_take_fork(t_philo *philo);
 t_bool    ft_eat(t_philo *philo);
@@ -82,7 +83,7 @@ t_bool    ft_think(t_philo *philo);
 
 // Command_help3
 void	print_events(t_philo *philo, int flag);
-void ft_usleep(time_t time);
+void ft_usleep(t_data *data, time_t time);
 void ft_wait(time_t time);
 long	get_time(void);
 
