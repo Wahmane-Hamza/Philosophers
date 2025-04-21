@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:32:36 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 14:11:56 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:39:56 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ long	ft_atol(char *str)
 	result = 0;
 	if (ft_check_str(str) == -1)
 		return (-1);
-	if (str[i] == '-' || str[i] == '+')
+	if (str[i] == '+')
+		i++;
+	if (str[i] == '-')
 		return (-1);
 	while ((str[i] >= '0' && str[i] <= '9'))
 	{
