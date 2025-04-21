@@ -13,7 +13,7 @@ all : ${NAME}
 ${NAME} : ${OBJ}
 	${CC} ${CFLAGS} ${OBJ} -o ${NAME}
 
-%.o : %.c
+%.o : %.c philosophers.h
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean :

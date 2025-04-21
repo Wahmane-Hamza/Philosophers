@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:05:07 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 17:07:58 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:44:42 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ t_bool	check_death(t_data *data)
 		{
 			pthread_mutex_lock(&data->stop);
 			data->stop_philo = true;
+			pthread_mutex_unlock(&data->stop);
 			pthread_mutex_unlock(&data->meal);
 			pthread_mutex_lock(&data->print);
 			printf("%ld %d is dead\n",
 				get_time() - data->start, data->philos[i].id);
 			pthread_mutex_unlock(&data->print);
-			pthread_mutex_unlock(&data->stop);
 			return (false);
 		}
 		i++;

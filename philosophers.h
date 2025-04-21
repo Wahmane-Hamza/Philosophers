@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:25 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/18 17:07:11 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:14:32 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,5 @@ t_bool				someone_died(t_data *data);
 
 // Command_help4
 void				*ft_monitor(void *arg);
-
-// void				creat_list(t_data *data, t_philo **philos);
-// void	init_time(t_philo *philo);
-// void	ft_usleep(t_philo *philo, long t);
-// t_philo	*lst_last(t_philo *head);
-// t_philo	*new_node(t_data *data);
-// void	lst_add_back(t_philo **head, t_philo *new_node);
-// int	take_lfork(t_philo *philo);
-// int	check_death(t_philo *philo);
-// void	print_events(t_philo *philo, int flag);
-// int	mutex_help(t_philo *philo, int flag);
-// void	print_death(t_philo *philo);
-// void	join_threads(t_data *data, t_philo *philos);
-// int	take_rfork(t_philo *philo);
-// void	ft_lstclear(t_philo **lst, t_data *data);
 
 #endif
